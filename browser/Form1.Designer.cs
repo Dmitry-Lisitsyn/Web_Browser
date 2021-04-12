@@ -36,8 +36,9 @@
             this.buRefresh = new System.Windows.Forms.ToolStripButton();
             this.textUrl = new System.Windows.Forms.ToolStripTextBox();
             this.buSearch = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.buSettings = new System.Windows.Forms.ToolStripDropDownButton();
+            this.buProfile = new System.Windows.Forms.ToolStripButton();
+            this.открытьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             // toolStrip2
             // 
             this.toolStrip2.AutoSize = false;
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.buBack,
             this.buForward,
@@ -63,14 +65,12 @@
             this.textUrl,
             this.buSearch,
             this.buSettings,
-            this.toolStripButton2});
+            this.buProfile});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(843, 50);
-            this.toolStrip2.Stretch = true;
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
-            this.toolStrip2.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip2_ItemClicked);
             // 
             // buBack
             // 
@@ -79,8 +79,9 @@
             this.buBack.Image = ((System.Drawing.Image)(resources.GetObject("buBack.Image")));
             this.buBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buBack.Name = "buBack";
-            this.buBack.Size = new System.Drawing.Size(23, 47);
+            this.buBack.Size = new System.Drawing.Size(29, 47);
             this.buBack.Text = "back";
+            this.buBack.Click += new System.EventHandler(this.buBack_Click_1);
             // 
             // buForward
             // 
@@ -88,8 +89,9 @@
             this.buForward.Image = ((System.Drawing.Image)(resources.GetObject("buForward.Image")));
             this.buForward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buForward.Name = "buForward";
-            this.buForward.Size = new System.Drawing.Size(23, 47);
+            this.buForward.Size = new System.Drawing.Size(29, 47);
             this.buForward.Text = "Forward";
+            this.buForward.Click += new System.EventHandler(this.buForward_Click_1);
             // 
             // buRefresh
             // 
@@ -97,16 +99,16 @@
             this.buRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buRefresh.Image")));
             this.buRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buRefresh.Name = "buRefresh";
-            this.buRefresh.Size = new System.Drawing.Size(23, 47);
+            this.buRefresh.Size = new System.Drawing.Size(29, 47);
             this.buRefresh.Text = "Refresh";
+            this.buRefresh.Click += new System.EventHandler(this.buRefresh_Click);
             // 
             // textUrl
             // 
-            this.textUrl.AutoSize = false;
             this.textUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.textUrl.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textUrl.Name = "textUrl";
-            this.textUrl.Size = new System.Drawing.Size(1500, 20);
+            this.textUrl.Size = new System.Drawing.Size(600, 50);
             // 
             // buSearch
             // 
@@ -114,32 +116,43 @@
             this.buSearch.Image = ((System.Drawing.Image)(resources.GetObject("buSearch.Image")));
             this.buSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buSearch.Name = "buSearch";
-            this.buSearch.Size = new System.Drawing.Size(23, 47);
+            this.buSearch.Size = new System.Drawing.Size(29, 47);
             this.buSearch.Text = "Search!";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(23, 47);
-            this.toolStripButton2.Text = "Authorization";
+            this.buSearch.Click += new System.EventHandler(this.buSearch_Click);
             // 
             // buSettings
             // 
             this.buSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.buSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buSettings.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.открытьФайлToolStripMenuItem});
             this.buSettings.Image = ((System.Drawing.Image)(resources.GetObject("buSettings.Image")));
             this.buSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buSettings.Name = "buSettings";
-            this.buSettings.Size = new System.Drawing.Size(29, 47);
+            this.buSettings.Size = new System.Drawing.Size(34, 47);
             this.buSettings.Text = "Settings";
+            // 
+            // buProfile
+            // 
+            this.buProfile.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.buProfile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.buProfile.Image = ((System.Drawing.Image)(resources.GetObject("buProfile.Image")));
+            this.buProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.buProfile.Name = "buProfile";
+            this.buProfile.Size = new System.Drawing.Size(29, 47);
+            this.buProfile.Text = "Authorization";
+            this.buProfile.Click += new System.EventHandler(this.buProfile_Click_1);
+            // 
+            // открытьФайлToolStripMenuItem
+            // 
+            this.открытьФайлToolStripMenuItem.Name = "открытьФайлToolStripMenuItem";
+            this.открытьФайлToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.открытьФайлToolStripMenuItem.Text = "Открыть файл...";
+            this.открытьФайлToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлToolStripMenuItem_Click);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
@@ -153,7 +166,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Web Browser";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
@@ -170,7 +182,8 @@
         private System.Windows.Forms.ToolStripTextBox textUrl;
         private System.Windows.Forms.ToolStripButton buSearch;
         private System.Windows.Forms.ToolStripDropDownButton buSettings;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton buProfile;
+        private System.Windows.Forms.ToolStripMenuItem открытьФайлToolStripMenuItem;
     }
 }
 
