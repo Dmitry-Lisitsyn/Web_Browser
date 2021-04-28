@@ -114,6 +114,7 @@ namespace browser
             }
         }
 
+
         // изменение заголовка 
         private void ChromeBrowser_TitleChanged(object sender, TitleChangedEventArgs e)
         {
