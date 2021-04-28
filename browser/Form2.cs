@@ -13,21 +13,29 @@ namespace browser
 {
     public partial class Form2 : Form
     {
+        //конструктор
         public Form2()
         {
-            InitializeComponent();
+            InitializeComponent();// инициализация компонентов
         }
-
+        //кнопка регистрации
         private void but_reg_Click(object sender, EventArgs e)
         {
-            MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
-            mysqlCSB.Server = "menelai.ddns.net";
 
+            MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
+            //доменное имя
+            mysqlCSB.Server = "menelai.ddns.net";
+            //логин от сервера mySql
             mysqlCSB.UserID = "menelai";
+            //пароль
             mysqlCSB.Password = "123";
+            //кодировка символов
             mysqlCSB.CharacterSet = "utf8";
+            //порт
             mysqlCSB.Port = 3333;
+            //имя базы данных
             mysqlCSB.Database = "Browser";
+            //создание подключения
             MySqlConnection myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
 
 
@@ -36,31 +44,41 @@ namespace browser
 
             try
             {
+                //открытие подключения
                 myConnection.Open();
 
-                
-                MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass) VALUES ('"+ box_log.Text +"','"+ box_pass.Text +"');", myConnection);
+                //внесение данных в БД
+                MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass) VALUES ('" + box_log.Text + "','" + box_pass.Text + "');", myConnection);
                 myCommand.ExecuteNonQuery();
                 MessageBox.Show("Пользователь зарегестрирован!");
+                //закрытие подлючения
                 myConnection.Close();
             }
+            //при наличии ошибки выводим ее
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка");
-                //
+
             }
         }
-
+        //обработка Sign Up
         private void but_vhod_Click(object sender, EventArgs e)
         {
-            MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
-            mysqlCSB.Server = "menelai.ddns.net";
 
+            MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
+            //доменное имя
+            mysqlCSB.Server = "menelai.ddns.net";
+            //логин от сервера mySql
             mysqlCSB.UserID = "menelai";
+            //пароль
             mysqlCSB.Password = "123";
+            //кодировка символов
             mysqlCSB.CharacterSet = "utf8";
+            //порт
             mysqlCSB.Port = 3333;
+            //имя базы данных
             mysqlCSB.Database = "Browser";
+            //создание подключения
             MySqlConnection myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
 
 
@@ -69,22 +87,28 @@ namespace browser
 
             try
             {
+                //открытие подключения
                 myConnection.Open();
 
-
-                MySqlCommand myCommand = new MySqlCommand("SELECT COUNT(*)  FROM Users WHERE login='" + log_vhod.Text+"' AND pass='"+pass_vhod.Text+"'", myConnection);
+                //проверка наличия логина и пароля в БД
+                MySqlCommand myCommand = new MySqlCommand("SELECT COUNT(*)  FROM Users WHERE login='" + log_vhod.Text + "' AND pass='" + pass_vhod.Text + "'", myConnection);
                 myCommand.ExecuteNonQuery();
-                //MessageBox.Show(myCommand.ExecuteScalar().ToString());
+
                 var result = Int32.Parse(myCommand.ExecuteScalar().ToString());
-                if ( result> 0) {
+                //если вход выполнен
+                if (result > 0)
+                {
                     MessageBox.Show("Выполнен вход в систему!");
                 }
-                else {
+                //если введенные данные пользователя не соответсвуют данным в БД
+                else
+                {
                     MessageBox.Show("Пользователь не найден, проверьте правильность данных");
                 }
-                //MessageBox.Show("Пользователь зарегестрирован!");
+                //закрытие подключения
                 myConnection.Close();
             }
+            //при наличии ошибки выводим ее
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка");
