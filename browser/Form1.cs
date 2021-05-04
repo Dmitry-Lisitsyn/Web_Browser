@@ -206,7 +206,8 @@ namespace browser
         //обработка нажатия на Профиль пользователя
         private void buProfile_Click_1(object sender, EventArgs e)
         {
-            Form2 frm = new Form2();
+            Form2 frm = new Form2(laUser);
+           
             frm.Show();
         }
     }

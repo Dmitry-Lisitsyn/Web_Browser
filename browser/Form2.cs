@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using CefSharp.WinForms;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,15 +15,18 @@ namespace browser
     public partial class Form2 : Form
     {
         public bool select_itembox=false;
-        public static readonly string Empty;       //конструктор
-        public Form2()
+        public static readonly string Empty;
+        //private ToolStrip tool_form1;//конструктор
+        public ToolStripLabel la=new ToolStripLabel("Вход");
+        public Form2(ToolStripLabel user)
         {
+            la = user;
             InitializeComponent();// инициализация компонентов
         }
         //кнопка регистрации
         private void but_reg_Click(object sender, EventArgs e)
         {
-
+           
             if (box_pass.Text != pass_accept.Text)
             {
                 MessageBox.Show("Введенные пароли не совпадают");
@@ -37,7 +41,7 @@ namespace browser
             }
             if (questi_answer.Text.ToString().Length==0)
             {
-                MessageBox.Show(questi_answer.Text);
+                //MessageBox.Show(questi_answer.Text);
                 MessageBox.Show("Проверьте ответ на контрольный вопрос");
                 return;
             }
@@ -64,11 +68,11 @@ namespace browser
             try
             {
                 //открытие подключения
-                
+              
                 myConnection.Open();
 
                 //внесение данных в БД
-                MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass) VALUES ('" + box_log.Text + "','" + box_pass.Text + "');", myConnection);
+                MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass,id_answer,answer) VALUES ('" + box_log.Text + "','" + box_pass.Text + "','" + questi.SelectedIndex + "','" + questi_answer.Text + "');", myConnection);
                 myCommand.ExecuteNonQuery();
                 MessageBox.Show("Пользователь зарегестрирован!");
                 //закрытие подлючения
@@ -122,6 +126,7 @@ namespace browser
                 if (result > 0)
                 {
                     MessageBox.Show("Выполнен вход в систему!");
+                    la.Text = "Вы вошли в систему как: " + log_vhod.Text;
                 }
                 //если введенные данные пользователя не соответсвуют данным в БД
                 else
@@ -138,6 +143,9 @@ namespace browser
                 MessageBox.Show(ex.Message, "Ошибка");
                 //
             }
+            
+           
+            
             this.Close();
         }
 
@@ -180,6 +188,12 @@ namespace browser
             select_itembox = false;
             label7.Visible = false;
             questi_answer.Visible = false;
+        }
+
+        private void butt_forgot_Click(object sender, EventArgs e)
+        {
+            Form3 frm = new Form3();
+            frm.Show();
         }
     }
 }

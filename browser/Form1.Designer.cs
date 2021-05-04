@@ -31,14 +31,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pContainer = new System.Windows.Forms.Panel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.textUrl = new System.Windows.Forms.ToolStripTextBox();
             this.buBack = new System.Windows.Forms.ToolStripButton();
             this.buForward = new System.Windows.Forms.ToolStripButton();
             this.buRefresh = new System.Windows.Forms.ToolStripButton();
-            this.textUrl = new System.Windows.Forms.ToolStripTextBox();
             this.buSearch = new System.Windows.Forms.ToolStripButton();
             this.buSettings = new System.Windows.Forms.ToolStripDropDownButton();
-            this.buProfile = new System.Windows.Forms.ToolStripButton();
             this.открытьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buProfile = new System.Windows.Forms.ToolStripButton();
+            this.laUser = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +52,7 @@
             this.pContainer.Location = new System.Drawing.Point(0, 52);
             this.pContainer.Margin = new System.Windows.Forms.Padding(2);
             this.pContainer.Name = "pContainer";
-            this.pContainer.Size = new System.Drawing.Size(843, 329);
+            this.pContainer.Size = new System.Drawing.Size(966, 416);
             this.pContainer.TabIndex = 3;
             // 
             // toolStrip2
@@ -65,12 +66,20 @@
             this.textUrl,
             this.buSearch,
             this.buSettings,
-            this.buProfile});
+            this.buProfile,
+            this.laUser});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(843, 50);
+            this.toolStrip2.Size = new System.Drawing.Size(966, 50);
             this.toolStrip2.TabIndex = 8;
             this.toolStrip2.Text = "toolStrip2";
+            // 
+            // textUrl
+            // 
+            this.textUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.textUrl.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textUrl.Name = "textUrl";
+            this.textUrl.Size = new System.Drawing.Size(600, 50);
             // 
             // buBack
             // 
@@ -79,7 +88,7 @@
             this.buBack.Image = ((System.Drawing.Image)(resources.GetObject("buBack.Image")));
             this.buBack.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buBack.Name = "buBack";
-            this.buBack.Size = new System.Drawing.Size(29, 47);
+            this.buBack.Size = new System.Drawing.Size(24, 47);
             this.buBack.Text = "back";
             this.buBack.Click += new System.EventHandler(this.buBack_Click_1);
             // 
@@ -89,7 +98,7 @@
             this.buForward.Image = ((System.Drawing.Image)(resources.GetObject("buForward.Image")));
             this.buForward.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buForward.Name = "buForward";
-            this.buForward.Size = new System.Drawing.Size(29, 47);
+            this.buForward.Size = new System.Drawing.Size(24, 47);
             this.buForward.Text = "Forward";
             this.buForward.Click += new System.EventHandler(this.buForward_Click_1);
             // 
@@ -99,16 +108,9 @@
             this.buRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buRefresh.Image")));
             this.buRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buRefresh.Name = "buRefresh";
-            this.buRefresh.Size = new System.Drawing.Size(29, 47);
+            this.buRefresh.Size = new System.Drawing.Size(24, 47);
             this.buRefresh.Text = "Refresh";
             this.buRefresh.Click += new System.EventHandler(this.buRefresh_Click);
-            // 
-            // textUrl
-            // 
-            this.textUrl.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textUrl.Font = new System.Drawing.Font("Comic Sans MS", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textUrl.Name = "textUrl";
-            this.textUrl.Size = new System.Drawing.Size(600, 50);
             // 
             // buSearch
             // 
@@ -116,7 +118,7 @@
             this.buSearch.Image = ((System.Drawing.Image)(resources.GetObject("buSearch.Image")));
             this.buSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buSearch.Name = "buSearch";
-            this.buSearch.Size = new System.Drawing.Size(29, 47);
+            this.buSearch.Size = new System.Drawing.Size(24, 47);
             this.buSearch.Text = "Search!";
             this.buSearch.Click += new System.EventHandler(this.buSearch_Click);
             // 
@@ -129,8 +131,15 @@
             this.buSettings.Image = ((System.Drawing.Image)(resources.GetObject("buSettings.Image")));
             this.buSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buSettings.Name = "buSettings";
-            this.buSettings.Size = new System.Drawing.Size(34, 47);
+            this.buSettings.Size = new System.Drawing.Size(33, 47);
             this.buSettings.Text = "Settings";
+            // 
+            // открытьФайлToolStripMenuItem
+            // 
+            this.открытьФайлToolStripMenuItem.Name = "открытьФайлToolStripMenuItem";
+            this.открытьФайлToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.открытьФайлToolStripMenuItem.Text = "Открыть файл...";
+            this.открытьФайлToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлToolStripMenuItem_Click);
             // 
             // buProfile
             // 
@@ -139,24 +148,24 @@
             this.buProfile.Image = ((System.Drawing.Image)(resources.GetObject("buProfile.Image")));
             this.buProfile.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.buProfile.Name = "buProfile";
-            this.buProfile.Size = new System.Drawing.Size(29, 47);
+            this.buProfile.Size = new System.Drawing.Size(24, 47);
             this.buProfile.Text = "Authorization";
             this.buProfile.Click += new System.EventHandler(this.buProfile_Click_1);
             // 
-            // открытьФайлToolStripMenuItem
+            // laUser
             // 
-            this.открытьФайлToolStripMenuItem.Name = "открытьФайлToolStripMenuItem";
-            this.открытьФайлToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.открытьФайлToolStripMenuItem.Text = "Открыть файл...";
-            this.открытьФайлToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлToolStripMenuItem_Click);
+            this.laUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.laUser.Name = "laUser";
+            this.laUser.Size = new System.Drawing.Size(108, 47);
+            this.laUser.Text = "Вход не выполнен";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(843, 392);
+            this.ClientSize = new System.Drawing.Size(966, 479);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.pContainer);
             this.DoubleBuffered = true;
@@ -184,6 +193,7 @@
         private System.Windows.Forms.ToolStripDropDownButton buSettings;
         private System.Windows.Forms.ToolStripButton buProfile;
         private System.Windows.Forms.ToolStripMenuItem открытьФайлToolStripMenuItem;
+        private System.Windows.Forms.ToolStripLabel laUser;
     }
 }
 
