@@ -40,6 +40,7 @@
             this.открытьФайлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buProfile = new System.Windows.Forms.ToolStripButton();
             this.laUser = new System.Windows.Forms.ToolStripLabel();
+            this.laVhod = new System.Windows.Forms.ToolStripLabel();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +68,8 @@
             this.buSearch,
             this.buSettings,
             this.buProfile,
-            this.laUser});
+            this.laUser,
+            this.laVhod});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(966, 50);
@@ -156,8 +158,14 @@
             // 
             this.laUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.laUser.Name = "laUser";
-            this.laUser.Size = new System.Drawing.Size(108, 47);
-            this.laUser.Text = "Вход не выполнен";
+            this.laUser.Size = new System.Drawing.Size(0, 47);
+            // 
+            // laVhod
+            // 
+            this.laVhod.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.laVhod.Name = "laVhod";
+            this.laVhod.Size = new System.Drawing.Size(108, 47);
+            this.laVhod.Text = "Вход не выполнен";
             // 
             // Form1
             // 
@@ -194,6 +202,7 @@
         private System.Windows.Forms.ToolStripButton buProfile;
         private System.Windows.Forms.ToolStripMenuItem открытьФайлToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel laUser;
+        private System.Windows.Forms.ToolStripLabel laVhod;
     }
 }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,12 @@ namespace browser
         public bool select_itembox=false;
         public static readonly string Empty;
         //private ToolStrip tool_form1;//конструктор
-        public ToolStripLabel la=new ToolStripLabel("Вход");
-        public Form2(ToolStripLabel user)
+        public ToolStripLabel laVhod1=new ToolStripLabel("Вход");
+        public ToolStripLabel laUser1 = new ToolStripLabel("Вход");
+        public Form2(ToolStripLabel vhod, ToolStripLabel user)
         {
-            la = user;
+            laVhod1 = vhod;
+            laUser1 = user;
             InitializeComponent();// инициализация компонентов
         }
         //кнопка регистрации
@@ -75,6 +78,10 @@ namespace browser
                 MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass,id_answer,answer) VALUES ('" + box_log.Text + "','" + box_pass.Text + "','" + questi.SelectedIndex + "','" + questi_answer.Text + "');", myConnection);
                 myCommand.ExecuteNonQuery();
                 MessageBox.Show("Пользователь зарегестрирован!");
+                MySqlCommand myCommand1 = new MySqlCommand("CREATE TABLE "+box_log.Text+" ("+box_log.Text+" VARCHAR(10000));", myConnection);
+                myCommand1.ExecuteNonQuery();
+               //  MySqlCommand myCommand2 = new MySqlCommand("ALTER TABLE "+box_log.Text+ " ADD COLUMN " + box_log.Text + " VARCHAR(255) NOT NULL;", myConnection);
+                //myCommand2.ExecuteNonQuery();
                 //закрытие подлючения
                 myConnection.Close();
             }
@@ -126,7 +133,19 @@ namespace browser
                 if (result > 0)
                 {
                     MessageBox.Show("Выполнен вход в систему!");
-                    la.Text = "Вы вошли в систему как: " + log_vhod.Text;
+                    laVhod1.Text = "Вы вошли в систему как: ";
+                    laUser1.Text = log_vhod.Text;
+                    MySqlCommand myCommand_any = new MySqlCommand("SELECT *  FROM "+log_vhod.Text+"", myConnection);
+                    MySqlDataReader reader = myCommand_any.ExecuteReader();
+                    StreamWriter write = new StreamWriter($@"\history{log_vhod.Text}.txt");
+                    while (reader.Read()) {
+                        write.Write("{0}", reader[0]);
+                        write.WriteLine();
+                    }
+                   // myCommand_any.ExecuteNonQuery();
+
+                    //var result_any = myCommand_any.ExecuteScalar().ToString();
+                   // MessageBox.Show(result_any.ToString());
                 }
                 //если введенные данные пользователя не соответсвуют данным в БД
                 else

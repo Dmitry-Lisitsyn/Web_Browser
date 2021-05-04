@@ -32,6 +32,7 @@ namespace browser
         public ChromiumWebBrowser chromeBrowser; // объявление компонентов, переменных
         private string currentPath;
         private bool writeFlag = true;
+        public MySqlConnection myConnection;
 
         public Form1()
         {
@@ -52,6 +53,21 @@ namespace browser
             textUrl.Click += TextUrl_Click;
             textUrl.KeyUp += TextUrl_KeyUp;
 
+            MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
+            //доменное имя
+            mysqlCSB.Server = "menelai.ddns.net";
+            //логин от сервера mySql
+            mysqlCSB.UserID = "menelai";
+            //пароль
+            mysqlCSB.Password = "123";
+            //кодировка символов
+            mysqlCSB.CharacterSet = "utf8";
+            //порт
+            mysqlCSB.Port = 3333;
+            //имя базы данных
+            mysqlCSB.Database = "Browser";
+            //создание подключения
+            myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
             //проверка наличия файла истории
             if (!File.Exists(currentPath + @"\history.txt"))
             {
@@ -170,10 +186,25 @@ namespace browser
         private void write_history(string url)
         {
 
-            using (StreamWriter sw = new StreamWriter(currentPath + @"\history.txt", true, System.Text.Encoding.Default))
+            if (laVhod.Text == "Вход не выполнен")
             {
-                sw.WriteLine(url);
-                sw.Close();
+                using (StreamWriter sw = new StreamWriter(currentPath + @"\history.txt", true, System.Text.Encoding.Default))
+                {
+                    sw.WriteLine(url);
+                    sw.Close();
+                }
+            }
+            if (laVhod.Text == "Вы вошли в систему как: ") {
+                using (StreamWriter sw = new StreamWriter(currentPath + $@"\history{laUser.Text}.txt", true, System.Text.Encoding.Default))
+                {
+
+                    sw.WriteLine(url);
+                    sw.Close();
+                    myConnection.Open();
+                    MySqlCommand myCommand = new MySqlCommand("INSERT INTO "+laUser.Text+"(" + laUser.Text + ") VALUES ('" + url + "');", myConnection);
+                    myCommand.ExecuteNonQuery();
+                    myConnection.Close();
+                }
             }
 
         }
@@ -206,7 +237,7 @@ namespace browser
         //обработка нажатия на Профиль пользователя
         private void buProfile_Click_1(object sender, EventArgs e)
         {
-            Form2 frm = new Form2(laUser);
+            Form2 frm = new Form2(laVhod, laUser); 
            
             frm.Show();
         }
