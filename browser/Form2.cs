@@ -13,7 +13,8 @@ namespace browser
 {
     public partial class Form2 : Form
     {
-        //конструктор
+        public bool select_itembox=false;
+        public static readonly string Empty;       //конструктор
         public Form2()
         {
             InitializeComponent();// инициализация компонентов
@@ -22,6 +23,24 @@ namespace browser
         private void but_reg_Click(object sender, EventArgs e)
         {
 
+            if (box_pass.Text != pass_accept.Text)
+            {
+                MessageBox.Show("Введенные пароли не совпадают");
+                return;
+            }
+            if ((select_itembox==false))
+            {
+
+                MessageBox.Show("Вы не выбрали конрольный вопрос");
+                
+                return;
+            }
+            if (questi_answer.Text.ToString().Length==0)
+            {
+                MessageBox.Show(questi_answer.Text);
+                MessageBox.Show("Проверьте ответ на контрольный вопрос");
+                return;
+            }
             MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
             //доменное имя
             mysqlCSB.Server = "menelai.ddns.net";
@@ -45,6 +64,7 @@ namespace browser
             try
             {
                 //открытие подключения
+                
                 myConnection.Open();
 
                 //внесение данных в БД
@@ -60,6 +80,9 @@ namespace browser
                 MessageBox.Show(ex.Message, "Ошибка");
 
             }
+            
+
+            this.Close();
         }
         //обработка Sign Up
         private void but_vhod_Click(object sender, EventArgs e)
@@ -108,12 +131,55 @@ namespace browser
                 //закрытие подключения
                 myConnection.Close();
             }
+
             //при наличии ошибки выводим ее
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка");
                 //
             }
+            this.Close();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void box_log_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar >= 'A' && e.KeyChar <= 'Z') || (e.KeyChar >= 'a' && e.KeyChar <= 'z') || (e.KeyChar >= '0' && e.KeyChar <= '9') || e.KeyChar == '_' || e.KeyChar == (char)Keys.Back)
+            {
+
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void box_pass_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
+
+        private void questi_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            select_itembox = true;
+            label7.Visible = true;
+            questi_answer.Visible = true;
+        }
+
+        private void Form2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            select_itembox = false;
+            label7.Visible = false;
+            questi_answer.Visible = false;
         }
     }
 }

@@ -42,6 +42,13 @@
             this.log_vhod = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.pass_vhod = new System.Windows.Forms.TextBox();
+            this.pass_accept = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.butt_forgot = new System.Windows.Forms.Button();
+            this.questi = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.questi_answer = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -55,10 +62,9 @@
             // 
             // but_reg
             // 
-            this.but_reg.Location = new System.Drawing.Point(67, 172);
-            this.but_reg.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.but_reg.Location = new System.Drawing.Point(59, 304);
             this.but_reg.Name = "but_reg";
-            this.but_reg.Size = new System.Drawing.Size(203, 28);
+            this.but_reg.Size = new System.Drawing.Size(152, 23);
             this.but_reg.TabIndex = 0;
             this.but_reg.Text = "Зарегистрироваться";
             this.but_reg.UseVisualStyleBackColor = true;
@@ -66,89 +72,93 @@
             // 
             // box_log
             // 
-            this.box_log.Location = new System.Drawing.Point(111, 30);
-            this.box_log.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.box_log.Location = new System.Drawing.Point(123, 44);
             this.box_log.Name = "box_log";
-            this.box_log.Size = new System.Drawing.Size(132, 22);
+            this.box_log.Size = new System.Drawing.Size(100, 20);
             this.box_log.TabIndex = 1;
+            this.box_log.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.box_log_KeyPress);
             // 
             // box_pass
             // 
-            this.box_pass.Location = new System.Drawing.Point(111, 86);
-            this.box_pass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.box_pass.Location = new System.Drawing.Point(123, 70);
             this.box_pass.Name = "box_pass";
-            this.box_pass.Size = new System.Drawing.Size(132, 22);
+            this.box_pass.PasswordChar = '*';
+            this.box_pass.Size = new System.Drawing.Size(100, 20);
             this.box_pass.TabIndex = 2;
+            this.box_pass.KeyDown += new System.Windows.Forms.KeyEventHandler(this.box_pass_KeyDown);
+            this.box_pass.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.box_log_KeyPress);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 33);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(25, 44);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 17);
+            this.label1.Size = new System.Drawing.Size(84, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Логин";
+            this.label1.Text = "Введите логин:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 90);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(7, 73);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 17);
+            this.label2.Size = new System.Drawing.Size(88, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Пароль";
+            this.label2.Text = "Введите пароль";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(16, 2);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Location = new System.Drawing.Point(12, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(421, 572);
+            this.tabControl1.Size = new System.Drawing.Size(316, 465);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.label7);
+            this.tabPage1.Controls.Add(this.questi_answer);
+            this.tabPage1.Controls.Add(this.label6);
+            this.tabPage1.Controls.Add(this.questi);
+            this.tabPage1.Controls.Add(this.label5);
+            this.tabPage1.Controls.Add(this.pass_accept);
             this.tabPage1.Controls.Add(this.but_reg);
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.box_log);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.box_pass);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(413, 543);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage1.Size = new System.Drawing.Size(308, 439);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Регистрация";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.butt_forgot);
             this.tabPage2.Controls.Add(this.but_vhod);
             this.tabPage2.Controls.Add(this.label3);
             this.tabPage2.Controls.Add(this.log_vhod);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.pass_vhod);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage2.Size = new System.Drawing.Size(413, 543);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage2.Size = new System.Drawing.Size(308, 439);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Войти";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // but_vhod
             // 
-            this.but_vhod.Location = new System.Drawing.Point(101, 252);
-            this.but_vhod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.but_vhod.Location = new System.Drawing.Point(85, 193);
             this.but_vhod.Name = "but_vhod";
-            this.but_vhod.Size = new System.Drawing.Size(203, 28);
+            this.but_vhod.Size = new System.Drawing.Size(152, 23);
             this.but_vhod.TabIndex = 5;
             this.but_vhod.Text = "Войти";
             this.but_vhod.UseVisualStyleBackColor = true;
@@ -157,48 +167,114 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(84, 172);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(63, 140);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 17);
+            this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 9;
             this.label3.Text = "Пароль";
             // 
             // log_vhod
             // 
-            this.log_vhod.Location = new System.Drawing.Point(171, 112);
-            this.log_vhod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.log_vhod.Location = new System.Drawing.Point(128, 91);
             this.log_vhod.Name = "log_vhod";
-            this.log_vhod.Size = new System.Drawing.Size(132, 22);
+            this.log_vhod.Size = new System.Drawing.Size(100, 20);
             this.log_vhod.TabIndex = 6;
+            this.log_vhod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.box_log_KeyPress);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(84, 116);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(63, 94);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 17);
+            this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 8;
             this.label4.Text = "Логин";
             // 
             // pass_vhod
             // 
-            this.pass_vhod.Location = new System.Drawing.Point(171, 169);
-            this.pass_vhod.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pass_vhod.Location = new System.Drawing.Point(128, 137);
             this.pass_vhod.Name = "pass_vhod";
-            this.pass_vhod.Size = new System.Drawing.Size(132, 22);
+            this.pass_vhod.PasswordChar = '*';
+            this.pass_vhod.Size = new System.Drawing.Size(100, 20);
             this.pass_vhod.TabIndex = 7;
+            this.pass_vhod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.box_log_KeyPress);
+            // 
+            // pass_accept
+            // 
+            this.pass_accept.Location = new System.Drawing.Point(123, 96);
+            this.pass_accept.Name = "pass_accept";
+            this.pass_accept.PasswordChar = '*';
+            this.pass_accept.Size = new System.Drawing.Size(100, 20);
+            this.pass_accept.TabIndex = 5;
+            this.pass_accept.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.box_log_KeyPress);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(7, 99);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(112, 13);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Подтвердите пароль";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // butt_forgot
+            // 
+            this.butt_forgot.Location = new System.Drawing.Point(114, 392);
+            this.butt_forgot.Name = "butt_forgot";
+            this.butt_forgot.Size = new System.Drawing.Size(75, 47);
+            this.butt_forgot.TabIndex = 10;
+            this.butt_forgot.Text = "Забыли пароль?";
+            this.butt_forgot.UseVisualStyleBackColor = true;
+            // 
+            // questi
+            // 
+            this.questi.FormattingEnabled = true;
+            this.questi.Items.AddRange(new object[] {
+            "Ваше первое домашнее животное?",
+            "В каком месяце у вас день рождения?"});
+            this.questi.Location = new System.Drawing.Point(39, 173);
+            this.questi.Name = "questi";
+            this.questi.Size = new System.Drawing.Size(226, 21);
+            this.questi.TabIndex = 7;
+            this.questi.SelectedIndexChanged += new System.EventHandler(this.questi_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(73, 157);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(169, 13);
+            this.label6.TabIndex = 8;
+            this.label6.Text = "Выберите контрольный вопрос:";
+            // 
+            // questi_answer
+            // 
+            this.questi_answer.Location = new System.Drawing.Point(59, 209);
+            this.questi_answer.Name = "questi_answer";
+            this.questi_answer.Size = new System.Drawing.Size(100, 20);
+            this.questi_answer.TabIndex = 9;
+            this.questi_answer.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 212);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(40, 13);
+            this.label7.TabIndex = 10;
+            this.label7.Text = "Ответ:";
+            this.label7.Visible = false;
             // 
             // Form2
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 572);
+            this.ClientSize = new System.Drawing.Size(336, 465);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Form2";
             this.Text = "Авторизация";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form2_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -225,5 +301,12 @@
         private System.Windows.Forms.TextBox log_vhod;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox pass_vhod;
+        private System.Windows.Forms.TextBox pass_accept;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button butt_forgot;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox questi_answer;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox questi;
     }
 }
