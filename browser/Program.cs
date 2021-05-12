@@ -22,7 +22,7 @@ namespace browser
             // Our First Tab created by default in the Application will have as content the Form1
             new TitleBarTab(container)
             {
-                Content = new Form1
+                Content = new Main_Form
                 {
                     Text = "New Tab"
                 }

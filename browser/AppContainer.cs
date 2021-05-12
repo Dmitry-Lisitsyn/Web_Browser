@@ -28,7 +28,7 @@ namespace browser
             return new TitleBarTab(this)
             {
 
-                Content = new Form1
+                Content = new Main_Form
                 {
 
                     Text = "New Tab"

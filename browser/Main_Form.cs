@@ -17,7 +17,7 @@ using System.IO;
 namespace browser
 {
 
-    public partial class Form1 : Form
+    public partial class Main_Form : Form
     {
 
 
@@ -31,10 +31,9 @@ namespace browser
         }
         public ChromiumWebBrowser chromeBrowser; // объявление компонентов, переменных
         private string currentPath;
-        private bool writeFlag = true;
         public MySqlConnection myConnection;
-
-        public Form1()
+        public double width, height;
+        public Main_Form()
         {
             InitializeComponent();// инициализация компонентов
             this.TopMost = true;
@@ -42,8 +41,11 @@ namespace browser
             InitializeChromium(); // инициализация браузера
 
             toolStrip2.ImageScalingSize = new Size(30, 30); // задаем размер иконок в тулбаре
+            width = this.ClientSize.Width;
+            height = this.ClientSize.Height;
 
             currentPath = Directory.GetCurrentDirectory().ToString(); //объявляем корневую директорию
+
             //вызов функций
             toolStrip2.SizeChanged += ToolStrip2_SizeChanged;
             this.SizeChanged += Form1_SizeChanged;
@@ -53,6 +55,20 @@ namespace browser
             textUrl.Click += TextUrl_Click;
             textUrl.KeyUp += TextUrl_KeyUp;
 
+            profile_Process();
+
+            //проверка наличия файла истории
+            if (!File.Exists(currentPath + @"\history.txt"))
+            {
+                File.Create(currentPath + @"\history.txt");
+
+            }
+
+
+        }
+
+        private void profile_Process()
+        {
             MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
             //доменное имя
             mysqlCSB.Server = "menelai.ddns.net";
@@ -68,16 +84,8 @@ namespace browser
             mysqlCSB.Database = "Browser";
             //создание подключения
             myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
-            //проверка наличия файла истории
-            if (!File.Exists(currentPath + @"\history.txt"))
-            {
-                File.Create(currentPath + @"\history.txt");
-
-            }
-
 
         }
-
         // функция изменения статуса загрузки браузера
         private void ChromeBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
@@ -219,6 +227,8 @@ namespace browser
                 textUrl.Text = dialog.FileName;
                 chromeBrowser.Load(textUrl.Text);
             }
+
+
             write_history(textUrl.Text);
         }
 

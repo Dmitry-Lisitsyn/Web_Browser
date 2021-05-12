@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using System.Windows.Forms;
 using CefSharp;
 using CefSharp.WinForms;
 
@@ -9,28 +9,22 @@ namespace browser
 {
    public class Class_Tests
     {
-        private ChromiumWebBrowser chrometest;
-        private bool pdfLoad_check = false;
-        public Class_Tests() {
-
-            chrometest = new ChromiumWebBrowser();
-
-        }
-        public bool IsPdfLoad(string link)
+        public bool IspageCorrect(string str)
         {
-             chrometest.Load(link);
-              chrometest.LoadingStateChanged += Chrometest_LoadingStateChanged;
-
-           return pdfLoad_check;
-           
-          
+            if (str == "https://www.google.com")
+                return true;
+            else
+                return false;
         }
 
-        private void Chrometest_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+        public bool IsSizeMax(double width, double height)
         {
-            if (!e.IsLoading)
-                pdfLoad_check = true;
+            if (width == 1920 && height == 997)
+                return true;
+            else
+                return false;
+            
         }
-
+      
     }
 }
