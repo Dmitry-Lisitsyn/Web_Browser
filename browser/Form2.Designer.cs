@@ -297,11 +297,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button but_vhod;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox log_vhod;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox pass_vhod;
         private System.Windows.Forms.TextBox pass_accept;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button butt_forgot;
@@ -309,5 +306,8 @@
         private System.Windows.Forms.TextBox questi_answer;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox questi;
+        public System.Windows.Forms.Button but_vhod;
+        public System.Windows.Forms.TextBox log_vhod;
+        public System.Windows.Forms.TextBox pass_vhod;
     }
 }

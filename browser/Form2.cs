@@ -26,6 +26,11 @@ namespace browser
             laUser1 = user;
             InitializeComponent();// инициализация компонентов
         }
+        public Form2()
+        {
+          
+            InitializeComponent();// инициализация компонентов
+        }
         //кнопка регистрации
         private void but_reg_Click(object sender, EventArgs e)
         {
