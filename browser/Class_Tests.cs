@@ -75,5 +75,24 @@ namespace browser
 
             return false;
         }
+
+
+        public bool isLinkCorrect(string str)
+        {
+            if (Uri.IsWellFormedUriString(str, UriKind.RelativeOrAbsolute))
+                return true;
+            else
+                return false;
+        }
+
+        public bool ISUrlSizeCorrect(int num)
+        {
+            int sizeUrl = 600;
+            if (num == sizeUrl)
+                return true;
+            else
+                return false;
+        }
+
     }
 }

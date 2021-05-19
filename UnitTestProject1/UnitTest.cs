@@ -39,5 +39,33 @@ namespace browser_tests
 
 
         }
+
+        [TestMethod]
+        public void strlink_returnValid()
+        {
+            var test = new Class_Tests();
+            var str = "https://lms.mospolytech.ru/";
+
+            bool expected = true;
+
+            bool result = test.isLinkCorrect(str);
+
+            Assert.AreEqual(expected, result);
+
+        }
+
+        [TestMethod]
+        public void urlSize_returnCorrectSize()
+        {
+            var test = new Class_Tests();
+
+            var num = 600;
+
+            bool expected = true;
+
+            bool result = test.ISUrlSizeCorrect(num);
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }
