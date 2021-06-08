@@ -35,9 +35,11 @@ namespace browser
         public double width, height;
         public Main_Form()
         {
+           // listBox1.Items.AddRange(File.ReadAllLines("history.txt", Encoding.Default));
             InitializeComponent();// инициализация компонентов
             this.TopMost = true;
             this.Update();
+           
             InitializeChromium(); // инициализация браузера
 
             toolStrip2.ImageScalingSize = new Size(30, 30); // задаем размер иконок в тулбаре
@@ -45,7 +47,13 @@ namespace browser
             height = this.ClientSize.Height;
 
             currentPath = Directory.GetCurrentDirectory().ToString(); //объявляем корневую директорию
-
+            try
+            {
+                listBox1.Items.AddRange(File.ReadAllLines("history.txt"));
+            }
+            catch { 
+            
+            }
             //вызов функций
             toolStrip2.SizeChanged += ToolStrip2_SizeChanged;
             this.SizeChanged += Form1_SizeChanged;
@@ -196,23 +204,49 @@ namespace browser
 
             if (laVhod.Text == "Вход не выполнен")
             {
-                using (StreamWriter sw = new StreamWriter(currentPath + @"\history.txt", true, System.Text.Encoding.Default))
+                try
                 {
-                    sw.WriteLine(url);
-                    sw.Close();
+                    using (StreamWriter sw = new StreamWriter(currentPath + @"\history.txt", true, System.Text.Encoding.Default))
+                    {
+                        sw.WriteLine(url);
+                        sw.Close();
+
+                    }
+
+                    
+                    string s = File.ReadAllLines(@"history.txt").Last();
+                   
+                    System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
+
+                    listBox1.Items.Add(s.ToString());
+                }
+                catch { 
+                
                 }
             }
+          
             if (laVhod.Text == "Вы вошли в систему как: ") {
-                using (StreamWriter sw = new StreamWriter(currentPath + $@"\history{laUser.Text}.txt", true, System.Text.Encoding.Default))
-                {
+               // try
+              //  {
+                    using (StreamWriter sw = new StreamWriter(currentPath + $@"\history{laUser.Text}.txt", true, System.Text.Encoding.Default))
+                    {
+                        buExit.Visible = true;
+                        sw.WriteLine(url);
 
-                    sw.WriteLine(url);
-                    sw.Close();
-                    myConnection.Open();
-                    MySqlCommand myCommand = new MySqlCommand("INSERT INTO "+laUser.Text+"(" + laUser.Text + ") VALUES ('" + url + "');", myConnection);
-                    myCommand.ExecuteNonQuery();
-                    myConnection.Close();
-                }
+                        sw.Close();
+
+                        myConnection.Open();
+                        MySqlCommand myCommand = new MySqlCommand("INSERT INTO " + laUser.Text + "(" + laUser.Text + ") VALUES ('" + url + "');", myConnection);
+                        myCommand.ExecuteNonQuery();
+                        myConnection.Close();
+                    }
+
+
+                    System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
+                    string s = File.ReadAllLines($@"history{laUser.Text}.txt").Last();
+                    listBox1.Items.Add(s.ToString());
+              //  }
+                //catch { }
             }
 
         }
@@ -244,10 +278,76 @@ namespace browser
             chromeBrowser.Forward();
         }
 
+        private void laVhod_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buExit_Click(object sender, EventArgs e)
+        {
+            laVhod.Text = "Вход не выполнен";
+            buExit.Visible = false;
+            laUser.Text = "";
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+            
+
+
+
+
+
+            if (laVhod.Text == "Вход не выполнен")
+            {
+                FileStream fs = File.Open("history.txt", FileMode.Open, FileAccess.ReadWrite);
+                fs.SetLength(0);
+                fs.Close();
+            }
+            if (laVhod.Text == "Вы вошли в систему как: ")
+            {
+                FileStream fs = File.Open($@"\history{laUser.Text}.txt", FileMode.Open, FileAccess.ReadWrite);
+                fs.SetLength(0);
+                fs.Close();
+
+            }
+        }
+
+        private void toolStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void hist_Click(object sender, EventArgs e)
+        {
+
+            //hist.Text = "Скрыть историю";
+            if (groupBox1.Visible == false)
+            {
+                hist.Text = "Скрыть историю";
+                groupBox1.Visible = true;
+                listBox1.Visible = true;
+                button1.Visible = true;
+            }
+            else {
+                hist.Text = "Показать историю";
+                groupBox1.Visible = false;
+                listBox1.Visible = false;
+                button1.Visible = false;
+            }
+
+        }
+
         //обработка нажатия на Профиль пользователя
         private void buProfile_Click_1(object sender, EventArgs e)
         {
-            Form2 frm = new Form2(laVhod, laUser); 
+            Form2 frm = new Form2(laVhod, laUser,buExit,listBox1); 
            
             frm.Show();
         }

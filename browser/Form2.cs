@@ -20,10 +20,14 @@ namespace browser
         //private ToolStrip tool_form1;//конструктор
         public ToolStripLabel laVhod1=new ToolStripLabel("Вход");
         public ToolStripLabel laUser1 = new ToolStripLabel("Вход");
-        public Form2(ToolStripLabel vhod, ToolStripLabel user)
+        public ToolStripButton exit1 = new ToolStripButton();
+        ListBox list123 = new ListBox();
+        public Form2(ToolStripLabel vhod, ToolStripLabel user, ToolStripButton exit,ListBox list2)
         {
             laVhod1 = vhod;
             laUser1 = user;
+            exit1 = exit;
+            list123 = list2;
             InitializeComponent();// инициализация компонентов
         }
         public Form2()
@@ -137,9 +141,29 @@ namespace browser
                 //если вход выполнен
                 if (result > 0)
                 {
+
+                  
+
+
+
                     MessageBox.Show("Выполнен вход в систему!");
                     laVhod1.Text = "Вы вошли в систему как: ";
                     laUser1.Text = log_vhod.Text;
+                    exit1.Visible = true;
+
+                    /*list123.Items.Clear();
+                    try
+                    {
+                        MessageBox.Show(laUser1.Text);
+                        list123.Items.AddRange(File.ReadAllLines($@"\history{laUser1.Text}.txt"));
+                    }
+                    catch
+                    {
+
+                    }*/
+
+
+
                     MySqlCommand myCommand_any = new MySqlCommand("SELECT *  FROM "+log_vhod.Text+"", myConnection);
                     MySqlDataReader reader = myCommand_any.ExecuteReader();
                     StreamWriter write = new StreamWriter($@"\history{log_vhod.Text}.txt");
@@ -147,6 +171,7 @@ namespace browser
                         write.Write("{0}", reader[0]);
                         write.WriteLine();
                     }
+                    write.Close();
                    // myCommand_any.ExecuteNonQuery();
 
                     //var result_any = myCommand_any.ExecuteScalar().ToString();
