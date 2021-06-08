@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "browser", "browser\browser.csproj", "{978D44E1-2801-4D03-891A-70E3DFBEBA48}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "browser.tests", "browser.tests\browser.tests\browser.tests.csproj", "{5B1D703B-E233-4B8C-B102-9ECF9378955A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "browser.tests", "browser.tests\browser.tests\browser.tests.csproj", "{5B1D703B-E233-4B8C-B102-9ECF9378955A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

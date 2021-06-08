@@ -13,6 +13,7 @@ using EasyTabs;
 using CefSharp.WinForms;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Linq;
 
 namespace browser
 {
@@ -33,6 +34,10 @@ namespace browser
         private string currentPath;
         private bool writeFlag = true;
         public MySqlConnection myConnection;
+
+        
+
+        FmAutofill fmAutofill = new FmAutofill();
 
         public Form1()
         {
@@ -73,13 +78,237 @@ namespace browser
             {
                 File.Create(currentPath + @"\history.txt");
 
-            }
+            } 
+			this.KeyDown += Form1_KeyPress;
+            chromeBrowser.LoadingStateChanged += OnLoadingStateChanged;
+			chromeBrowser.KeyDown += ChromeBrowser_KeyDown;
+        }
 
+		private void ChromeBrowser_KeyDown(object sender, KeyEventArgs e)
+		{
+            if (e.KeyCode == Keys.F5)
+            {
+                chromeBrowser.Reload(true);
+            }
+        }
+
+		private void Form1_KeyPress(object sender, KeyEventArgs e)
+		{
+            if (e.KeyCode == Keys.F5)
+			{
+                chromeBrowser.Reload(true);
+            }
 
         }
 
-        // функция изменения статуса загрузки браузера
-        private void ChromeBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+
+        //массив эвентов, которые вызываются на поле для в вода 
+        string[] arrEvents = { "pointerover", "mousedown", "change", "focus", "blur", "input", "focusout", "click", "xhMeHaDAa", "hXEVLyyNg", "touchend" };
+        //string[] arrEvents = { "focus" };
+
+        //массив id полей для ввода данных, которые при совпадении срабатывают для заполнения 
+        string[][] Params = new string[][]
+        {
+                        new string[] { "firstName", "fname", "ORDER_PROP_1", "korz_imy"},
+                        new string[] { "lastName", "lname"},
+                        new string[] { "address1", "ORDER_PROP_7"},
+                        new string[] { "city"},
+                        new string[] { "zipcode"},
+                        new string[] { "houseNumber" },
+                        new string[] { "phoneNumber", "ORDER_PROP_3", "korz_tel"},
+                        new string[] { "emailAddress", "email", "ORDER_PROP_2", "korz_mail" },
+                        new string[] { "password" }
+        };
+
+        //основная функция
+        private void OnLoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
+		{
+            if (!e.IsLoading)
+            {
+				if (fmAutofill.afAdidas)
+				{
+                    
+                    //данные, которые будут заполняться 
+                    string[] dataToPaste =
+                    {"Станислав Сиротинин", "Сиротинин", "г Москва, ул Парковая 7-я, д 9/26", 
+                        "Москва", "105043", "9/26", "+7(910)262-07-51", "stassir99@gmail.com", "pass123"};
+                
+                    //вызываемый на странице скрипт
+				    for (int i = 0; i < Params.Length; i++)
+				    {
+					    for (int k = 0; k < Params[i].Length; k++)
+					    {
+                            //пытаемся вставить данные в поле для ввода
+                            chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + Params[i][k] + "]').value = '" + dataToPaste[i] + "';");
+                            for (int j = 0; j < arrEvents.Length; j++)
+                            {
+                                //вызываем метод dispatchEvent с типом эвентов из массива для того, чтобы сайт подумал, что мы ввели данные, а не изменили value
+                                chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + Params[i][k] + "]').dispatchEvent(new Event('" + arrEvents[j] + "', {bubbles: true})); ");
+                            }
+                            //пытаемся еще раз вставить данные в поле для ввода
+                            chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + Params[i][k] + "]').value = '" + dataToPaste[i] + "';");
+                        }
+                    }
+                    //прожатие кнопок на adidas 
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('input[data-auto-id=explicit-consent-checkbox]').click()");
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('button[data-auto-id=review-and-pay-button]').click();");
+                
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=confirm_reg_policy]').click();");
+
+                }
+
+                //не работает 
+				if (fmAutofill.afEnd)
+				{
+                    string[] dataToPaste =
+                    {"Stanislav", "Sirotinin", "г Москва, ул Парковая 7-я, д 9/26",
+                        "Москва", "105043", "9/26", "+7(910)262-07-51", "govno123mail3@mail.ru", "pass123"};
+
+
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('button.sc-1bm65b4-1.khrZHe').click()");
+                    //chromeBrowser.ExecuteScriptAsync("document.querySelector('button.sc-1bm65b4-1.khrZHe').click()");
+
+
+                    for (int i = 0; i < Params.Length; i++)
+                    {
+                        for (int k = 0; k < Params[i].Length; k++)
+                        {
+                            //chromeBrowser.ExecuteScriptAsync("document.querySelector('input[id=" + Params[i][k] + "]').value = '" + dataToPaste[i] + "';");
+                            for (int j = 0; j < arrEvents.Length; j++)
+                            {
+                                chromeBrowser.ExecuteScriptAsyncWhenPageLoaded("document.querySelector('input[id=" + Params[i][k] + "]').dispatchEvent(new Event('" + arrEvents[j] + "', {bubbles: true})); ");
+                                chromeBrowser.ExecuteScriptAsyncWhenPageLoaded("document.querySelector('input[id=" + Params[i][k] + "]').value = '" + dataToPaste[i] + "';");
+                            }
+
+
+                            /*for (int j = 0; j < arrEvents.Length; j++)
+                            {
+                                chromeBrowser.ExecuteScriptAsyncWhenPageLoaded("document.querySelector('input[id=" + Params[i][k] + "]').dispatchEvent(new Event('" + arrEvents[j] + "', {bubbles: true})); ");
+                            }*/
+
+
+                        }
+                    }
+                }
+                /*
+
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('li.delivery-tabs.tabs-title').click();" +
+                    "" +
+                    "document.querySelector('button[id=shop160]').click()");
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('label[for=korz_payment_tupe3] div').click();");
+
+                */
+
+
+                /*
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('select[data - fieldvalidtemplate = location_region]').value = '184'");
+                for (int j = 0; j < arrEvents.Length; j++) { 
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('select[data-fieldvalidtemplate=location_region] option[value='184']').dispatchEvent(new Event('blur'));");
+                } 
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('select[data - fieldvalidtemplate = location_region]').value = '184'");
+                */
+
+                /*
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + arrNames[0] + "]').value = '"+ name +"';");
+				for (int j = 0; j < arrEvents.Length; j++)
+				{
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + arrNames[0] + "]').dispatchEvent(new Event('"+ arrEvents[j] +"', {bubbles: true})); ");
+                }
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + arrNames[0] + "]').value = '" + name + "';");
+
+
+
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + arrSurnames[0] + "]').value = '"+ surname + "';");
+				for (int j = 0; j < arrEvents.Length; j++)
+				{
+                    chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + arrSurnames[0] + "]').dispatchEvent(new Event('"+ arrEvents[j] +"', {bubbles: true})); ");
+                }
+                chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=" + arrSurnames[0] + "]').value = '" + surname + "';");
+
+                */
+
+
+
+
+                /*
+                chromeBrowser.ExecuteScriptAsync(
+                
+                "document.querySelector('input[name=firstName]').value = 'Имяепта'; " +
+                "document.querySelector('input[name=firstName]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=firstName]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=firstName]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=firstName]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=firstName]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=firstName]').value = 'Имяепта'; " +
+
+                "document.querySelector('input[name=address1]').value = 'address 123'; " + 
+                "document.querySelector('input[name=address1]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=address1]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=address1]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=address1]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=address1]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=address1]').value = 'address 123'; " +
+
+                "document.querySelector('input[name=lastName]').value = 'Фамилияда'; " +
+                "document.querySelector('input[name=lastName]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=lastName]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=lastName]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=lastName]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=lastName]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=lastName]').value = 'Фамилияда'; " +
+
+                "document.querySelector('input[name=city]').value = 'Москва'; " +
+                "document.querySelector('input[name=city]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=city]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=city]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=city]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=city]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=city]').value = 'Москва'; " +
+
+
+                "document.querySelector('input[name=zipcode]').value = '105043'; " +
+                "document.querySelector('input[name=zipcode]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=zipcode]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=zipcode]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=zipcode]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=zipcode]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=zipcode]').value = '105043'; " +
+
+
+                "document.querySelector('input[name=houseNumber]').value = '9/26'; " +
+                "document.querySelector('input[name=houseNumber]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=houseNumber]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=houseNumber]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=houseNumber]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=houseNumber]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=houseNumber]').value = '9/26'; " +
+
+
+                "document.querySelector('input[name=phoneNumber]').value = '+7(910)262-07-99'; " +
+                "document.querySelector('input[name=phoneNumber]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=phoneNumber]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=phoneNumber]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=phoneNumber]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=phoneNumber]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=phoneNumber]').value = '+7(910)262-07-99'; " +
+
+                "document.querySelector('input[name=emailAddress]').value = 'stassir99@gmail.com'; " +
+                "document.querySelector('input[name=emailAddress]').dispatchEvent(new Event('change', {bubbles: true})); " +
+                "document.querySelector('input[name=emailAddress]').dispatchEvent(new Event('blur', {bubbles: true}));" +
+                "document.querySelector('input[name=emailAddress]').dispatchEvent(new Event('focus', {bubbles: true})); " +
+                "document.querySelector('input[name=emailAddress]').dispatchEvent(new Event('input', {bubbles: true})); " +
+                "document.querySelector('input[name=emailAddress]').dispatchEvent(new Event('focusout', {bubbles: true})); " +
+                "document.querySelector('input[name=emailAddress]').value = 'stassir99@gmail.com'; " 
+
+                
+                );*/
+            }
+        }
+
+      //  void autodispatch ()
+
+		// функция изменения статуса загрузки браузера
+		private void ChromeBrowser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
         {
             if (!e.IsLoading)
                 write_history(chromeBrowser.Address.ToString());
@@ -121,6 +350,7 @@ namespace browser
             {
 
                 chromeBrowser.Load(url);
+                //var doc = XDocument.Load(url);
 
             }
             else
@@ -158,8 +388,11 @@ namespace browser
         //начальные параметры загрузки браузера
         public void InitializeChromium()
         {
-
-            textUrl.Text = "https://www.google.com";
+            string startUrl =
+             //"https://www.adidas.ru/krossovki-lite-racer-rbn-2.0/FY8188.html";
+            "https://kotofoto.ru/shop/uid_407681_videokarta_pny_tesla_t4_16gb_tcst4matx_pb.html";
+            //"https://launches.endclothing.com/product/yeezy-500-gx3605";
+            textUrl.Text = startUrl;
             chromeBrowser = new ChromiumWebBrowser(textUrl.Text);
 
             chromeBrowser.Dock = DockStyle.Fill;
@@ -171,7 +404,7 @@ namespace browser
         //обработка перезагрузки страницы
         private void buRefresh_Click(object sender, EventArgs e)
         {
-            chromeBrowser.Refresh();
+            chromeBrowser.Reload(true);
         }
 
         //обработка нажатия на поиск
@@ -241,7 +474,26 @@ namespace browser
            
             frm.Show();
         }
-    }
+
+		private void toolStripMenuItem1_Click(object sender, EventArgs e)
+		{
+            
+        }
+
+		private void button1ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+
+            fmAutofill.ShowDialog();
+            
+            
+
+        }
+
+        private void button2ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+            chromeBrowser.ShowDevTools();
+        }
+	}
 }
 
 
