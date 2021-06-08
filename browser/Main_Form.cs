@@ -187,7 +187,7 @@ namespace browser
         //обработка перезагрузки страницы
         private void buRefresh_Click(object sender, EventArgs e)
         {
-            chromeBrowser.Refresh();
+            chromeBrowser.Reload(true);
         }
 
         //обработка нажатия на поиск
