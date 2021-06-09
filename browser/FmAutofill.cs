@@ -20,8 +20,6 @@ namespace browser
 		public bool afAdidas;
 		public bool afEnd;
 
-		
-
 		private void cbEnd_CheckedChanged(object sender, EventArgs e)
 		{
 			if (cbEnd.Checked)
@@ -32,11 +30,6 @@ namespace browser
 			{
 				afEnd = false;
 			}
-		}
-
-		private void FmAutofill_Load(object sender, EventArgs e)
-		{
-
 		}
 
 		private void cbAdidas_CheckedChanged(object sender, EventArgs e)

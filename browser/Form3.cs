@@ -71,20 +71,13 @@ namespace browser
             mysqlCSB.Database = "Browser";
             //создание подключения
             MySqlConnection myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
-
-
-
-
-
             try
             {
                 //открытие подключения
-
                 myConnection.Open();
 
                 //внесение данных в БД
                 MySqlCommand myCommand = new MySqlCommand("SELECT COUNT(*)  FROM Users WHERE login='" + log_voss.Text + "' AND id_answer='" + questi.SelectedIndex + "'AND answer='" + questi_answer.Text + "'", myConnection);
-                // MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass,id_answer,answer) VALUES ('" + box_log.Text + "','" + box_pass.Text + "','" + questi.SelectedIndex + "','" + questi_answer.te + "');", myConnection);
                 myCommand.ExecuteNonQuery();
                 var result = Int32.Parse(myCommand.ExecuteScalar().ToString());
                 //если вход выполнен
@@ -102,8 +95,6 @@ namespace browser
                 else {
                     return;
                 }
-
-               
                 //закрытие подлючения
                 myConnection.Close();
             }
@@ -113,27 +104,6 @@ namespace browser
                 MessageBox.Show(ex.Message, "Ошибка");
 
             }
-        }
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-     
-
-        private void but_reg_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void box_pass_KeyDown(object sender, KeyEventArgs e)
-        {
-
         }
 
         private void questi_SelectedIndexChanged(object sender, EventArgs e)

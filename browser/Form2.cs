@@ -21,6 +21,7 @@ namespace browser
         public ToolStripLabel laVhod1=new ToolStripLabel("Вход");
         public ToolStripLabel laUser1 = new ToolStripLabel("Вход");
         public ToolStripButton exit1 = new ToolStripButton();
+        public string currentPath;
         ListBox list123 = new ListBox();
         public Form2(ToolStripLabel vhod, ToolStripLabel user, ToolStripButton exit,ListBox list2)
         {
@@ -28,6 +29,7 @@ namespace browser
             laUser1 = user;
             exit1 = exit;
             list123 = list2;
+            currentPath = Directory.GetCurrentDirectory().ToString(); //объявляем корневую директорию
             InitializeComponent();// инициализация компонентов
         }
         public Form2()
@@ -47,7 +49,7 @@ namespace browser
             if ((select_itembox==false))
             {
 
-                MessageBox.Show("Вы не выбрали конрольный вопрос");
+                MessageBox.Show("Вы не выбрали контрольный вопрос");
                 
                 return;
             }
@@ -72,25 +74,17 @@ namespace browser
             mysqlCSB.Database = "Browser";
             //создание подключения
             MySqlConnection myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
-
-
-
-
-
             try
             {
                 //открытие подключения
-              
                 myConnection.Open();
 
                 //внесение данных в БД
                 MySqlCommand myCommand = new MySqlCommand("INSERT INTO Users(login,pass,id_answer,answer) VALUES ('" + box_log.Text + "','" + box_pass.Text + "','" + questi.SelectedIndex + "','" + questi_answer.Text + "');", myConnection);
                 myCommand.ExecuteNonQuery();
-                MessageBox.Show("Пользователь зарегестрирован!");
+                MessageBox.Show("Пользователь зарегистрирован!");
                 MySqlCommand myCommand1 = new MySqlCommand("CREATE TABLE "+box_log.Text+" ("+box_log.Text+" VARCHAR(10000));", myConnection);
                 myCommand1.ExecuteNonQuery();
-               //  MySqlCommand myCommand2 = new MySqlCommand("ALTER TABLE "+box_log.Text+ " ADD COLUMN " + box_log.Text + " VARCHAR(255) NOT NULL;", myConnection);
-                //myCommand2.ExecuteNonQuery();
                 //закрытие подлючения
                 myConnection.Close();
             }
@@ -98,16 +92,12 @@ namespace browser
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка");
-
             }
-            
-
             this.Close();
         }
         //обработка Sign Up
         private void but_vhod_Click(object sender, EventArgs e)
         {
-
             MySqlConnectionStringBuilder mysqlCSB = new MySqlConnectionStringBuilder();
             //доменное имя
             mysqlCSB.Server = "menelai.ddns.net";
@@ -123,59 +113,29 @@ namespace browser
             mysqlCSB.Database = "Browser";
             //создание подключения
             MySqlConnection myConnection = new MySqlConnection(mysqlCSB.ConnectionString);
-
-
-
-
-
             try
             {
                 //открытие подключения
                 myConnection.Open();
-
                 //проверка наличия логина и пароля в БД
                 MySqlCommand myCommand = new MySqlCommand("SELECT COUNT(*)  FROM Users WHERE login='" + log_vhod.Text + "' AND pass='" + pass_vhod.Text + "'", myConnection);
                 myCommand.ExecuteNonQuery();
-
                 var result = Int32.Parse(myCommand.ExecuteScalar().ToString());
                 //если вход выполнен
                 if (result > 0)
                 {
-
-                  
-
-
-
                     MessageBox.Show("Выполнен вход в систему!");
                     laVhod1.Text = "Вы вошли в систему как: ";
                     laUser1.Text = log_vhod.Text;
                     exit1.Visible = true;
-
-                    /*list123.Items.Clear();
-                    try
-                    {
-                        MessageBox.Show(laUser1.Text);
-                        list123.Items.AddRange(File.ReadAllLines($@"\history{laUser1.Text}.txt"));
-                    }
-                    catch
-                    {
-
-                    }*/
-
-
-
                     MySqlCommand myCommand_any = new MySqlCommand("SELECT *  FROM "+log_vhod.Text+"", myConnection);
                     MySqlDataReader reader = myCommand_any.ExecuteReader();
-                    StreamWriter write = new StreamWriter($@"\history{log_vhod.Text}.txt");
+                    StreamWriter write = new StreamWriter(currentPath+ $@"\history{log_vhod.Text}.txt");
                     while (reader.Read()) {
                         write.Write("{0}", reader[0]);
                         write.WriteLine();
                     }
                     write.Close();
-                   // myCommand_any.ExecuteNonQuery();
-
-                    //var result_any = myCommand_any.ExecuteScalar().ToString();
-                   // MessageBox.Show(result_any.ToString());
                 }
                 //если введенные данные пользователя не соответсвуют данным в БД
                 else
@@ -189,23 +149,10 @@ namespace browser
             //при наличии ошибки выводим ее
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Ошибка");
-                //
+                MessageBox.Show(ex.Message, "Ошибка");              
             }
             
-           
-            
             this.Close();
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void box_log_KeyPress(object sender, KeyPressEventArgs e)
@@ -218,11 +165,6 @@ namespace browser
             {
                 e.Handled = true;
             }
-        }
-
-        private void box_pass_KeyDown(object sender, KeyEventArgs e)
-        {
-
         }
 
         private void questi_SelectedIndexChanged(object sender, EventArgs e)

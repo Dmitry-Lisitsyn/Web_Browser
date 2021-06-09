@@ -39,7 +39,7 @@ namespace browser
 
         public Main_Form()
         {
-           // listBox1.Items.AddRange(File.ReadAllLines("history.txt", Encoding.Default));
+          
             InitializeComponent();// инициализация компонентов
             this.TopMost = true;
             this.Update();
@@ -75,22 +75,11 @@ namespace browser
             if (!File.Exists(currentPath + @"\history.txt"))
             {
                 File.Create(currentPath + @"\history.txt");
-
             }
-
-
         }
 
-
-        /**
-         * 
-         *      AUTOFILL CODE BE LIKE:
-         * 
-         */
-
-        //массив эвентов, которые вызываются на поле для в вода 
+        //массив эвентов, которые вызываются на поле для ввода 
         string[] arrEvents = { "pointerover", "mousedown", "change", "focus", "blur", "input", "focusout", "click", "xhMeHaDAa", "hXEVLyyNg", "touchend" };
-        //string[] arrEvents = { "focus" };
 
         //массив id полей для ввода данных, которые при совпадении срабатывают для заполнения 
         string[][] Params = new string[][]
@@ -112,7 +101,6 @@ namespace browser
             {
                 if (fmAutofill.afAdidas)
                 {
-
                     //данные, которые будут заполняться 
                     string[] dataToPaste =
                     {"Станислав Сиротинин", "Сиротинин", "г Москва, ул Парковая 7-я, д 9/26",
@@ -137,7 +125,6 @@ namespace browser
                     //прожатие кнопок на adidas 
                     chromeBrowser.ExecuteScriptAsync("document.querySelector('input[data-auto-id=explicit-consent-checkbox]').click()");
                     chromeBrowser.ExecuteScriptAsync("document.querySelector('button[data-auto-id=review-and-pay-button]').click();");
-
                     chromeBrowser.ExecuteScriptAsync("document.querySelector('input[name=confirm_reg_policy]').click();");
 
                 }
@@ -149,28 +136,17 @@ namespace browser
                     {"Stanislav", "Sirotinin", "г Москва, ул Парковая 7-я, д 9/26",
                         "Москва", "105043", "9/26", "+7(910)262-07-51", "govno123mail3@mail.ru", "pass123"};
 
-
                     chromeBrowser.ExecuteScriptAsync("document.querySelector('button.sc-1bm65b4-1.khrZHe').click()");
-                    //chromeBrowser.ExecuteScriptAsync("document.querySelector('button.sc-1bm65b4-1.khrZHe').click()");
-
 
                     for (int i = 0; i < Params.Length; i++)
                     {
                         for (int k = 0; k < Params[i].Length; k++)
-                        {
-                            //chromeBrowser.ExecuteScriptAsync("document.querySelector('input[id=" + Params[i][k] + "]').value = '" + dataToPaste[i] + "';");
+                        {         
                             for (int j = 0; j < arrEvents.Length; j++)
                             {
                                 chromeBrowser.ExecuteScriptAsyncWhenPageLoaded("document.querySelector('input[id=" + Params[i][k] + "]').dispatchEvent(new Event('" + arrEvents[j] + "', {bubbles: true})); ");
                                 chromeBrowser.ExecuteScriptAsyncWhenPageLoaded("document.querySelector('input[id=" + Params[i][k] + "]').value = '" + dataToPaste[i] + "';");
                             }
-
-
-                            /*for (int j = 0; j < arrEvents.Length; j++)
-                            {
-                                chromeBrowser.ExecuteScriptAsyncWhenPageLoaded("document.querySelector('input[id=" + Params[i][k] + "]').dispatchEvent(new Event('" + arrEvents[j] + "', {bubbles: true})); ");
-                            }*/
-
 
                         }
                     }
@@ -238,9 +214,7 @@ namespace browser
         {
             if (Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
             {
-
                 chromeBrowser.Load(url);
-
             }
             else
             {
@@ -262,15 +236,12 @@ namespace browser
         {
             this.InvokeOnUiThreadIfRequired(() => textUrl.Text = e.Address);
 
-
         }
 
         //изменение размеров формы
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             toolStrip2.Width = this.Width;
-            //chromeBrowser.Size = pContainer.Size;
-            //this.Invalidate();
 
         }
 
@@ -297,8 +268,6 @@ namespace browser
         private void buSearch_Click(object sender, EventArgs e)
         {
             LoadUrl(textUrl.Text);
-
-
         }
 
         // запись истории
@@ -315,12 +284,9 @@ namespace browser
                         sw.Close();
 
                     }
-
                     
                     string s = File.ReadAllLines(@"history.txt").Last();
-                   
                     System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
-
                     listBox1.Items.Add(s.ToString());
                 }
                 catch { 
@@ -329,8 +295,7 @@ namespace browser
             }
           
             if (laVhod.Text == "Вы вошли в систему как: ") {
-               // try
-              //  {
+               
                     using (StreamWriter sw = new StreamWriter(currentPath + $@"\history{laUser.Text}.txt", true, System.Text.Encoding.Default))
                     {
                         buExit.Visible = true;
@@ -343,13 +308,9 @@ namespace browser
                         myCommand.ExecuteNonQuery();
                         myConnection.Close();
                     }
-
-
                     System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
                     string s = File.ReadAllLines($@"history{laUser.Text}.txt").Last();
                     listBox1.Items.Add(s.ToString());
-              //  }
-                //catch { }
             }
 
         }
@@ -393,20 +354,10 @@ namespace browser
             laUser.Text = "";
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-            
-
-
-
-
-
+           
             if (laVhod.Text == "Вход не выполнен")
             {
                 FileStream fs = File.Open("history.txt", FileMode.Open, FileAccess.ReadWrite);
@@ -415,37 +366,13 @@ namespace browser
             }
             if (laVhod.Text == "Вы вошли в систему как: ")
             {
-                FileStream fs = File.Open($@"\history{laUser.Text}.txt", FileMode.Open, FileAccess.ReadWrite);
+                FileStream fs = File.Open(currentPath + $@"\history{laUser.Text}.txt", FileMode.Open, FileAccess.ReadWrite);
                 fs.SetLength(0);
                 fs.Close();
 
             }
         }
 
-        private void toolStrip2_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void hist_Click(object sender, EventArgs e)
-        {
-
-            //hist.Text = "Скрыть историю";
-            if (groupBox1.Visible == false)
-            {
-                hist.Text = "Скрыть историю";
-                groupBox1.Visible = true;
-                listBox1.Visible = true;
-                button1.Visible = true;
-            }
-            else {
-                hist.Text = "Показать историю";
-                groupBox1.Visible = false;
-                listBox1.Visible = false;
-                button1.Visible = false;
-            }
-
-        }
 
 		private void toolStripMenuItem1_Click(object sender, EventArgs e)
 		{
@@ -457,8 +384,28 @@ namespace browser
             chromeBrowser.ShowDevTools();
         }
 
-		//обработка нажатия на Профиль пользователя
-		private void buProfile_Click_1(object sender, EventArgs e)
+        private void hist_Click_1(object sender, EventArgs e)
+        {
+            if (groupBox1.Visible == false)
+            {
+                hist.Text = "Скрыть историю";
+                groupBox1.Visible = true;
+                listBox1.Visible = true;
+                button1.Visible = true;
+            }
+            else
+            {
+                hist.Text = "Показать историю";
+                groupBox1.Visible = false;
+                listBox1.Visible = false;
+                button1.Visible = false;
+            }
+
+        }
+
+
+        //обработка нажатия на Профиль пользователя
+        private void buProfile_Click_1(object sender, EventArgs e)
         {
             Form2 frm = new Form2(laVhod, laUser,buExit,listBox1); 
            
